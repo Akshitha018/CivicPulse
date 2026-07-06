@@ -20,7 +20,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-FRONTEND_DIR = os.path.join(os.path.dirname(__file__), "frontend")
+from fastapi.responses import FileResponse
+
+@app.get("/")
+def home():
+    return FileResponse("index.html")
 
 
 @app.on_event("startup")
@@ -147,7 +151,7 @@ def status():
 # ---------------------------------------------------------------------------
 # Serve frontend
 # ---------------------------------------------------------------------------
-app.mount("/static", StaticFiles(directory=FRONTEND_DIR), name="static")
+#  app.mount("/static", StaticFiles(directory=FRONTEND_DIR), name="static") 
 
 
 @app.get("/")
